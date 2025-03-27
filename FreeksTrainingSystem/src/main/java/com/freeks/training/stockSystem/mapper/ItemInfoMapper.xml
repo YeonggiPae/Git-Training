@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	 	   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.freeks.training.stockSystem.mapper.ItemInfoMapper">
+
+	<!-- 商品情報取得用Mapper -->
+	<resultMap type="com.freeks.training.stockSystem.entity.ItemInfoEntity" id="itemInfo">
+		<id property="itemId" column="item_id" />           <!--商品ID-->
+		<result property="itemName" column="item_name" />   <!--商品名称-->
+		<result property="itemKubun" column="kubun_name" /> <!--商品区分名称-->
+		<result property="maker" column="maker" />          <!--メーカー名-->
+		<result property="jancd" column="jancd" />          <!--商品JANコード-->
+		<result property="purchaseUnitPrice" column="purchase_unit_price" />  <!--購入単価-->
+		<result property="salesUnitPrice" column="sales_unit_price" />        <!--販売単価-->
+		<result property="storageLocation" column="storage_location" />       <!--保管場所-->
+		<result property="receiptDate" column="receipt_date" />               <!--入庫日-->
+		<result property="createUser" column="create_user" />                 <!--作成者-->
+		<result property="createDate" column="create_date" />                 <!--作成日時-->
+		<result property="updateUser" column="update_user" />                 <!--更新者-->
+		<result property="updateDate" column="update_date" />                 <!--更新日時-->
+		<result property="logicalDeleteFlg" column="logical_delete_flg" />    <!--論理削除フラグ-->
+		<result property="version" column="version" />                        <!--バージョン-->
+	</resultMap>
+	
+	
+	<!-- 在庫情報取得用Mapper -->
+	<resultMap type="com.freeks.training.stockSystem.entity.ItemStockEntity" id="itemStock">
+		<id property="itemId" column="item_id" />
+		<result property="storageStockId" column="storage_stock_id" />		<!-- 在庫ID -->
+		<result property="stockQuantity" column="stock_quantity"/>			<!-- 在庫数 -->
+		<result property="receiveQuantity" column="receive_quantity"/>		<!-- 入庫数 -->
+		<result property="dispatchQuantity" column="dispatch_quantity"/>	<!-- 出庫数 -->
+		<result property="storageLocation" column="storage_location"/>		<!-- 保管場所 -->
+		<result property="createUser" column="create_user"/>  <!-- 作成者 -->
+		<result property="createDate" column="create_date"/>  <!-- 作成日時 -->
+		<result property="updateUser" column="update_user"/>  <!-- 更新者 -->
+		<result property="updateDate" column="update_date"/>  <!-- 更新日時 -->	
+	</resultMap>
+	
+	
+	<!-- 全商品情報を取得-->
+	<select id="getFindAll" resultMap="itemInfo">
+		SELECT
+			m_item.item_id,
+			m_item.item_name,
+			m_kubun.kubun_name,
+			m_item.maker,
+			m_item.jancd,
+			m_item.purchase_unit_price,
+			m_item.sales_unit_price,
+			m_item.storage_location,
+			m_item.receipt_date,
+			m_item.create_user,
+			m_item.create_date,
+			m_item.update_user,
+			m_item.update_date
+			
+	<!-- 商品マスタと商品区分マスタを内部結合 -->
+		FROM 
+			stock_system.m_item AS m_item
+			INNER JOIN 
+				stock_system.m_kubun AS m_kubun
+				ON 
+					m_item.item_kubun = m_kubun.kubun_cd
+		<!--絞り込み条件に商品マスタと商品区分マスタの論理削除フラグ=falseを指定-->
+		WHERE
+			m_item.logical_delete_flg = false
+			AND
+				m_kubun.logical_delete_flg = false
+		<!--商品マスタの商品IDでソート -->
+		ORDER BY
+			m_item.item_id;
+	</select>
+	
+	<!-- 商品リストのうち、CSV出力する項目のみ取得 -->
+	<select id="getExportsItem" resultMap="itemInfo">
+		SELECT
+			m_item.item_id,
+			m_item.item_name,
+			m_kubun.kubun_name,
+			m_item.maker,
+			m_item.jancd,
+			m_item.purchase_unit_price,
+			m_item.sales_unit_price,
+			m_item.storage_location,
+			m_item.receipt_date,
+			
+	<!-- 商品マスタと商品区分マスタを内部結合 -->
+		FROM 
+			stock_system.m_item AS m_item
+			INNER JOIN 
+				stock_system.m_kubun AS m_kubun
+				ON 
+					m_item.item_kubun = m_kubun.kubun_cd
+		<!--絞り込み条件に商品マスタと商品区分マスタの論理削除フラグ=falseを指定-->
+		WHERE
+			m_item.logical_delete_flg = false
+			AND
+				m_kubun.logical_delete_flg = false
+		<!--商品マスタの商品IDでソート -->
+		ORDER BY
+			m_item.item_id;
+	</select>
+	
+	
+	<!-- 商品名称重複チェック用Mapper。受信した商品名を取得-->
+	<select id="findByItemName" resultMap="itemInfo">
+		SELECT
+			m_item.item_id,
+			m_item.item_name,
+			m_kubun.kubun_name,
+			m_item.maker,
+			m_item.jancd,
+			m_item.purchase_unit_price,
+			m_item.sales_unit_price,
+			m_item.storage_location
+		FROM 
+			stock_system.m_item AS m_item
+			INNER JOIN
+				stock_system.m_kubun AS m_kubun
+				ON 
+				m_item.item_kubun = m_kubun.kubun_cd
+		WHERE
+			item_name = #{itemName}
+			AND
+				(m_item.logical_delete_flg,m_kubun.logical_delete_flg) = (false,false);
+	</select>
+	
+
+	<!-- 商品登録Mapper-->
+	<insert id="insert">
+		INSERT 
+		    INTO stock_system.m_item( 
+			        item_name, 
+			        item_kubun, 
+			        maker, 
+			        jancd, 
+			        purchase_unit_price, 
+			        sales_unit_price, 
+			        storage_location, 
+			        receipt_date, 
+			        create_user, 
+			        create_date, 
+			        update_user, 
+			        update_date, 
+			        logical_delete_flg, 
+			        version
+			    ) 
+	    VALUES ( 
+	        #{itemName}, 
+	        #{itemKubun}, 
+	        #{maker}, 
+	        #{jancd}, 
+	        #{purchaseUnitPrice}, 
+	        #{salesUnitPrice}, 
+	        #{storageLocation}, 
+	        #{receiptDate}, 
+	        #{createUser}, 
+	        #{createDate}, 
+	        #{updateUser}, 
+	        #{updateDate}, 
+	        #{logicalDeleteFlg}, 
+	        #{version}
+	    );
+	    
+    </insert>
+	
+	<!-- 在庫登録Mapper-->
+	<insert id="stockInsert">
+		INSERT 
+		    INTO stock_system.storage_stock( 
+		    item_id,
+			stock_quantity,
+			receive_quantity,
+			dispatch_quantity,
+			storage_location,
+			create_user,
+			create_date,
+			update_user,
+			update_date,
+			logical_delete_flg,
+			version
+		    ) 
+	    VALUES ( 
+	    	#{itemId}, 
+	        #{stockQuantity},
+	        #{receiveQuantity},
+	        #{dispatchQuantity},
+	        #{storageLocation}, 
+	        #{createUser}, 
+	        #{createDate}, 
+	        #{updateUser}, 
+	        #{updateDate}, 
+	        #{logicalDeleteFlg}, 
+	        #{version}
+	    );
+	</insert>
+	
+	
+	<!-- 選択した商品IDから商品情報を取得-->
+	<select id="findByItemId" resultMap="itemInfo">
+		SELECT
+			m_item.item_id,
+			m_item.item_name,
+			m_kubun.kubun_name,
+			m_item.maker,
+			m_item.jancd,
+			m_item.purchase_unit_price,
+			m_item.sales_unit_price,
+			m_item.storage_location,
+			m_item.receipt_date,
+			m_item.create_user,
+			m_item.create_date,
+			m_item.update_user,
+			m_item.update_date
+		FROM 
+			stock_system.m_item AS m_item
+			INNER JOIN 
+				stock_system.m_kubun AS m_kubun
+				ON 
+					m_item.item_kubun = m_kubun.kubun_cd
+				AND
+					m_kubun.logical_delete_flg = false
+		WHERE
+			item_id = #{itemId} AND m_item.logical_delete_flg = false
+			
+	</select>
+	
+	
+	<!-- 選択した商品の在庫情報を取得-->
+	<select id="findStockByItemId" resultMap="itemStock">
+		SELECT
+			storage_stock_id,
+    		item_id,
+	    	stock_quantity,
+	    	receive_quantity,
+	    	dispatch_quantity,
+	    	storage_location,
+	    	create_user,
+	    	create_date,
+	    	update_user,
+	    	update_date
+       
+		FROM stock_system.storage_stock
+			<!-- インターフェースから受け取ったIDをキーにして取得 -->
+			WHERE item_id = #{itemId} AND logical_delete_flg = false
+	</select>
+	
+	
+	<!-- 商品情報更新 -->
+	<update id="updateItemInfo">
+		UPDATE 
+			stock_system.m_item 
+		SET
+	        storage_location = #{storageLocation},  <!-- 保管場所 -->
+	        update_user = #{updateUser},			<!-- 更新者 -->
+	        update_date = #{updateDate},			<!-- 更新日 -->
+	        version = version + 1					<!-- バージョン -->
+	    WHERE
+	        item_id = #{itemId} AND logical_delete_flg = false AND version = (SELECT m_item.version FROM stock_system.m_item AS m_item WHERE m_item.item_id = #{itemId});
+	
+	</update>
+	
+	<!-- 在庫情報更新 -->
+	<update id="updateStock">
+		UPDATE 
+			stock_system.storage_stock 
+		SET
+	        stock_quantity = #{stockQuantity},			<!-- 在庫数 -->
+	        receive_quantity = #{receiveQuantity},		<!-- 入庫数 -->
+	        dispatch_quantity = #{dispatchQuantity},	<!-- 出庫数 -->
+	        storage_location = #{storageLocation},		<!-- 保管場所 -->
+	        update_user = #{updateUser},				<!-- 更新者 -->
+	        update_date = #{updateDate},				<!-- 更新日 -->
+	        version = version + 1						<!-- バージョン -->
+	    WHERE
+	        item_id = #{itemId} AND logical_delete_flg = false AND version = (SELECT stock.version FROM stock_system.storage_stock AS stock WHERE stock.item_id = #{itemId});
+	</update>
+	
+	
+	<!-- 商品削除 -->
+	<delete id="delete">
+		DELETE 
+		    FROM
+		        stock_system.m_item
+		    WHERE
+		        item_id = #{itemId};
+	</delete>
+	
+	
+	<!-- 在庫削除 -->
+	<delete id="deleteStock">
+		DELETE 
+		    FROM
+		        stock_system.storage_stock
+		    WHERE
+		        item_id = #{itemId};
+	</delete>
+	
+</mapper>

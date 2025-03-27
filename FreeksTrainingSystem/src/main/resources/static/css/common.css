@@ -1,0 +1,121 @@
+@charset "UTF-8";
+
+body{
+	margin: 0;
+	min-height: 100vh;
+	position: relative;
+	padding-top: 100px;
+	padding-bottom: 80px;
+	box-sizing: border-box;
+}
+	
+/* 共有フッター */
+.footer{
+	width: 100%;
+	background-color: darkgray;
+	color: white;
+	position: absolute;
+	bottom: 0;
+	height: 50px;
+	text-align: center;
+}
+	
+.copy-right{
+	font-size: 15px;
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+	-webkit-transform: translateX(-50%);
+	-ms-transform: translateX(-50%);
+}
+
+
+/* 共通ヘッダー */
+.header{
+	width: 100%;
+	background-color: #27acd9;
+	color: white;
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 80px;
+}
+	
+.logo{
+	width: 230px;
+	position: absolute;
+	top: 50%;
+	left: 15px;
+	transform: translateY(-50%);
+	-webkit-transform: translateY(-50%);
+	-ms-transform: translateY(-50%);
+}
+
+.header-system-name{
+	font-size: 20px;
+	position: absolute;
+	top: 65%;
+	left: 250px;
+	transform: translateY(-50%);
+	-webkit-transform: translateY(-50%);
+	-ms-transform: translateY(-50%);
+}
+	
+.header-title-name{
+	font-size: 28px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	-webkit-transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
+}
+	
+/* -- ボタン関連 -- */
+
+/*中央に配置*/
+.btn-area-center{
+		width: auto;
+		margin: auto;
+		text-align: center;
+		padding-top: 50px;
+		padding-top: 50px;
+}
+
+/*メニューボタン*/
+.menu-btn{
+		width: 300px;
+		height: 75px;
+		margin: 20px;
+		padding: 20px 40px;
+		font-weight: bold;
+		border: 1px solid #27acd9;
+		border-radius: 100vw;
+		color: white;
+		cursor: pointer;
+		position: relative;
+		font-size: 25px;
+		overflow: hidden;
+		z-index: 1;
+		background-color: #27acd9;
+		cursor: pointer;
+}
+
+/*戻るボタン*/
+.back-btn{
+		width: 250px;
+		background-color: #333;
+		color: #fff;
+		font-weight: bold;
+		display: block;
+		margin: 20px;
+		font-size: 16px;
+		padding: 15px;
+		border-radius: 100vh;
+		border: none;
+		appearance: none;
+		-webkit-appearance: none;
+		-moz-appearance: none;
+		cursor: pointer;
+}
+

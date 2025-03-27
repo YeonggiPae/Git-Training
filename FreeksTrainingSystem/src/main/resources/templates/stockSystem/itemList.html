@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>freeks研修システム</title>
+		<link rel="stylesheet" href="css/common.css">
+		<link rel="stylesheet" href="css/stock_system.css">
+	</head>
+	
+	<head th:replace="utils/header::header_block(title='商品一覧')"></head>
+	<footer th:replace="utils/footer::footer_block(| |)"></footer>
+	
+	<body>
+		<div class="error-msg">
+			<!--ItemControllerからitemList変数を「itemListForm」として受け取り、
+				itemList変数に格納された商品情報、あるいはエラーメッセージを表示-->
+			<span th:if="${itemListForm.errMsg}" th:text="${itemListForm.errMsg}" class="error-msg-text">エラーメッセージ </span>
+		</div>
+		<div class="system-msg">
+			<span th:if="${itemListForm.sysMsg}" th:text="${itemListForm.sysMsg}">システムメッセージ </span>
+		</div>
+		<div th:unless="${itemListForm.errMsg}" class="block-list">
+			<table><tr>
+		
+				<th>商品ID</th>
+				<th>商品名称</th>
+				<th>区分</th>
+				<th>メーカー</th>
+				<th>JANコード</th>
+				<th>購入単価</th>
+				<th>販売単価</th>
+				<th>保管場所</th>
+				<th>入庫日</th>
+				<th>在庫</th></tr>
+				
+				<tr th:each="item:${itemListForm.itemInfoFormList}">
+					
+					<td>
+						<a th:text="${item.itemId}"
+						   th:href="@{/itemDetail/{itemId}(itemId=${item.itemId})}">
+					    </a>
+					</td>
+					<td th:text="${item.itemName}"></td>
+					<td th:text="${item.itemKubun}"></td>
+					<td th:text="${item.maker}"></td>
+					<td th:text="${item.jancd}"></td>
+					<td th:text="${item.purchaseUnitPrice}"></td>
+					<td th:text="${item.salesUnitPrice}"></td>
+					<td th:text="${item.storageLocation}"></td>
+					<td th:text="${item.receiptDate}"></td>
+					<td>
+						<a th:text="在庫詳細"
+						   th:href="@{/itemStock/{itemId}(itemId=${item.itemId})}">
+					    </a>
+					</td>
+				</tr>
+			</table><br>
+		</div>
+		
+		<div th:unless="${itemListForm.errMsg}" class="btn-container">
+				<button id="downloadCsvBtn" class="btn">CSV出力</button>
+
+			<form th:action="@{/itemInsert}" method="get">
+				<input type="submit" name="insert" value="商品情報登録" class="btn" />
+			</form>
+			
+		</div>
+		
+		<div class="btn-container">
+			<button type="button" class="back-btn" onclick="location.href='/'">HOMEへ戻る</button>
+		</div>
+		
+		<script src="/js/downloadCsv.js"></script>
+	</body>
+</html>
+
+
+

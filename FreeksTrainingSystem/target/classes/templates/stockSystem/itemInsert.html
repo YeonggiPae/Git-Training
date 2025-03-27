@@ -1,0 +1,107 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>freeks研修システム</title>
+		<link rel="stylesheet" href="/css/common.css">
+		<link rel="stylesheet" href="/css/stock_system.css">
+	</head>
+	
+	<body>
+		<header th:replace="utils/header::header_block(title='商品情報登録')"></header>
+		<footer th:replace="utils/footer::footer_block(| |)"></footer>
+		
+		<div class="error-msg">
+			<!--ItemControllerからitemInfoFormを「itemInfoForm」として受け取り、
+				itemInfoFormクラスに格納された商品情報、あるいはエラーメッセージを表示-->
+			<span th:if="${itemInfoForm.errMsg}" th:text="${itemInfoForm.errMsg}">エラーメッセージ</span>
+		</div>
+		<div class="system-msg">
+			<span th:if="${itemInfoForm.sysMsg}" th:text="${itemInfoForm.sysMsg}">システムメッセージ </span>
+		</div>
+		
+		<div class="block-detail">
+			<form th:action="@{/itemCreate}" method="post" th:object="${itemInfoForm}">
+				<table>
+					<tr>
+						<!-- 1～20文字制限、入力必須-->
+						<th>商品名</th>
+						<td>
+							<input type="text" th:field="*{itemName}"/><br>
+							<span style="color:red;" th:if="${#fields.hasErrors('itemName')}" 
+								th:errors="*{itemName}">haserror</span>
+						</td>
+                    </tr>
+                    <tr>
+                        <th>区分</th>
+                        <td>
+                            <select class="select" th:field="*{itemKubun}">
+                                <option value="1">国産たばこ</option>
+                                <option value="2">輸入たばこ</option>
+                                <option value="3">デバイス</option>
+                                <option value="4">喫煙具</option>
+                            </select>
+                        </td>
+                    </tr>
+					<tr>
+						<!-- 1～20文字制限、入力必須-->
+                        <th>メーカー</th>
+                        <td>
+                            <input type="text" th:field="*{maker}"/><br>
+                            <span style="color:red;" th:if="${#fields.hasErrors('maker')}" 
+                            th:errors="*{maker}">haserror</span>
+                        </td>
+                    </tr>
+					<tr>
+						<!-- 13桁の英数字のみ、入力必須-->
+                        <th>JANコード</th>
+                        <td>
+                            <input type="text" th:field="*{jancd}"/><br>
+                            <span style="color:red;" th:if="${#fields.hasErrors('jancd')}" 
+                            th:errors="*{jancd}">haserror</span>
+                        </td>
+                    </tr>
+					<tr>
+						<!-- 0以上かつint型の最大値以下の数字のみ、入力必須-->
+                        <th>購入単価</th>
+                        <td>
+                            <input type="text" th:field="*{purchaseUnitPrice}"/><br>
+                            <span style="color:red;" th:if="${#fields.hasErrors('purchaseUnitPrice')}" 
+                            th:errors="*{purchaseUnitPrice}">haserror</span>
+                        </td>
+                    </tr>
+					<tr>
+						<!-- 0以上かつint型の最大値以下の数字のみ、入力必須-->
+                        <th>販売単価</th>
+                        <td>
+                            <input type="text" th:field="*{salesUnitPrice}"/><br>
+                            <span style="color:red;" th:if="${#fields.hasErrors('salesUnitPrice')}" 
+                            th:errors="*{salesUnitPrice}">haserror</span>
+                        </td>
+                    </tr>
+					<tr>
+						<!-- 1～20文字制限、入力必須-->
+                        <th>保管場所</th>
+                        <td>
+                            <input type="text" th:field="*{storageLocation}"/><br>
+                            <span style="color:red;" th:if="${#fields.hasErrors('storageLocation')}" 
+                            th:errors="*{storageLocation}">haserror</span>
+                        </td>
+                    </tr>
+				</table><br>
+				
+				<div class="btn-container">
+					<input type="submit" value="登録" class="btn" />
+				</div>
+			</form>
+		
+	        <div class="btn-form">
+	  	    	<button type="button" class="back-btn" onclick="location.href='/'">HOMEへ戻る</button>	
+			</div>
+		</div>
+	  </body>
+</html>
+
+
+

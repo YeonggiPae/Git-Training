@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+	
+	<meta charset="UTF-8">
+	<title>freeks研修システム</title>
+	<link rel="stylesheet" href="css/common.css">
+	
+</head>
+
+<head th:replace="utils/header::header_block(title='FirstWebSystem')"></head>
+<footer th:replace="utils/footer::footer_block(| |)"></footer>
+
+<body>
+	
+	<div class="btn-area-center">
+		<p th:text="${msg}"></p>
+		<button type="button" class="back-btn" onclick="location.href='/'">HOMEへ戻る</button>
+	</div>
+	
+</body>
+
+</html>

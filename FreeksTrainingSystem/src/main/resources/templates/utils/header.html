@@ -1,0 +1,10 @@
+<header th:fragment="header_block(title)" th:remove="tag">
+	
+	<link th:href="@{css/common.css}" rel="stylesheet">
+	
+	<div class="header">
+		<img class="logo" th:src="@{/images/logo.png}">
+		<span class="header-system-name">freeks研修システム</span>
+		<span class="header-title-name" th:text="${title}"></span>
+	</div>
+</header>

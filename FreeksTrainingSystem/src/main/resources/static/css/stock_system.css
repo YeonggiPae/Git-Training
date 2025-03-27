@@ -1,0 +1,165 @@
+@charset "UTF-8";
+.error-msg {
+	color: red; 
+	font-size: 20px; 
+	font-weight: normal; 
+	text-align: center;
+	
+}
+
+.system-msg {
+	color: red; 
+	font-size: 20px; 
+	font-weight: normal; 
+	text-align: center;
+}
+
+
+.btn-container{
+	display: flex;
+	justify-content: center;
+    width: auto;
+}
+
+.btn-container form{
+	display: inline-block;
+}
+
+.btn-form{
+	display: flex;
+	justify-content: center;
+	width: auto;
+}
+
+.btn-form form{
+	display: inline-block;
+}
+
+
+
+.btn {
+	display: inline-block;
+	vertical-align: middle; 
+	font-size: 20px; 
+	margin: 10px 10px;
+	padding: 6px 25px; 
+	color: #27acd9; 
+	font-weight: bold; 
+	letter-spacing: 0.5pt;
+	text-decoration: none; 
+	background-color: #ffffff; 
+	border: 2px solid #27acd9;
+	cursor: pointer; 
+	transition-duration: 0.3s;
+	-webkit-transition-duration: 0.3s;
+	-moz-transition-duration: 0.3s; 
+	-o-transition-duration: 0.3s; 
+	-ms-transition-duration: 0.3s;
+}
+
+.btn:hover {
+	color: white; 
+	background: #27acd9;
+}
+
+/** リストテーブル用 */
+
+.block-list {
+	width: 80%; 
+	padding-top: 25px; 
+	margin: auto; 
+	text-align: center;
+}
+
+.block-list table {
+	border-collapse: separate; 
+	border-spacing: 0; 
+	margin: auto;
+}
+
+.block-list th:first-child {
+	border-radius: 5px 0 0 0;
+}
+
+.block-list th:last-child {
+	border-radius: 0 5px 0 0; 
+	border-right: 1px solid #3c6690;
+}
+
+.block-list th {
+	color: white; 
+	background: #27acd9; 
+	text-align: center; 
+	border-left:1px solid #a8b7c5; 
+	border-bottom: 1px solid #a8b7c5; 
+	border-top: none; 
+	padding: 15px 30px;
+}
+
+.block-list td {
+	border-left: 1px solid #a8b7c5; 
+	border-bottom: 1px solid #a8b7c5; 
+	border-top: none; 
+	padding: 12px 30px;
+}
+
+.block-list td:last-child {
+	border-right: 1px solid #a8b7c5;
+}
+
+.block-list tr:last-child td:first-child {
+	border-radius: 0 0 0 5px;
+}
+
+.block-list tr:last-child td:last-child {
+	border-radius: 0 0 5px 0;
+}
+
+
+/** 詳細テーブル用 **/
+.block-detail{
+	width:auto;
+	padding:25px;
+	margin:auto;
+	text-align: center;
+	font-size: 12px;
+}
+
+.block-detail table{
+	border-collapse: collapse;
+	border-spacing: 0;
+	margin:auto;
+	
+}
+
+.block-detail tr{
+	border-bottom:solid 2px white;
+}
+
+.block-detail tr.last-child{
+	border-bottom: none;
+}
+
+.block-detail th{
+	position:relative;
+	width:150px;
+	background-color: #27acd9;
+	color: white;
+	padding:10px 10px;
+}
+
+.block-detail td{
+	width:250px;
+	background-color: #eeeeee;
+	padding:10px 10px;
+}
+
+select{
+	text-align: center;
+	width:170px;
+}
+
+.error-msg-text {
+	display: inline-block;
+    white-space: pre-line;
+}

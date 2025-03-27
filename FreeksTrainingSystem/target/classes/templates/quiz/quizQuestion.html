@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>freeks研修システム</title>
+		<link rel="stylesheet" href="css/common.css">
+		<link rel="stylesheet" href="css/quiz.css">
+	</head>
+
+	<head th:replace="utils/header::header_block(title='クイズ画面')"></head>
+	<footer th:replace="utils/footer::footer_block(| |)"></footer>
+
+	<body>
+		<form th:action="@{/quizResult}" method="post" th:object="${quizForm}" class="btn-area-center">
+			<!--設問1-->
+			<div class="question-area">
+				<strong th:text="*{title1}"></strong></br>
+				<span th:text="*{body1}"></span></br>
+				
+				<div th:each="choice1, status1 : *{choiceList1}">
+					<input type="radio" th:field="*{selected1}" th:value="${status1.index+1}" th:text="${choice1}" />
+				</div>
+			</div>
+			
+			<!--設問2-->
+			<div class="question-area">
+				<strong th:text="*{title2}"></strong></br>
+				<span th:text="*{body2}"></span></br>
+				
+				<div th:each="choice2, status2 : *{choiceList2}">
+					<input type="radio" th:field="*{selected2}" th:value="${status2.index+1}" th:text="${choice2}" />
+				</div>
+			</div>
+			
+			<!--設問3-->
+			<div class="question-area">
+				<strong th:text="*{title3}"></strong></br>
+				<span th:text="*{body3}"></span></br>
+				
+				<div th:each="choice3, status3 : *{choiceList3}">
+					<input type="radio" th:field="*{selected3}" th:value="${status3.index+1}" th:text="${choice3}" />
+				</div>
+			</div>
+			
+				<button type="submit" class="btn-answer">回答</button>
+		</form>
+		
+		<button type="button" class="back-btn" onclick="location.href='/'">HOMEへ戻る</button>
+	</body>
+</html>

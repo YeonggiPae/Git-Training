@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>freeks研修システム</title>
+		<link rel="stylesheet" href="/css/common.css">
+		<link rel="stylesheet" href="/css/stock_system.css">
+	</head>
+	
+
+
+	<body>
+		<header th:replace="utils/header::header_block(title='商品情報詳細')"></header>
+		<footer th:replace="utils/footer::footer_block(| |)"></footer>
+		
+		<div class="error-msg">
+			<!--ItemControllerからitemInfoFormを「itemInfoForm」として受け取り、
+				itemList変数に格納された商品情報、あるいはエラーメッセージを表示-->
+			<span th:if="${itemInfoForm.errMsg}" th:text="${itemInfoForm.errMsg}">エラーメッセージ</span>
+		</div>
+		<div class="system-msg">
+			<span th:if="${itemInfoForm.sysMsg}" th:text="${itemInfoForm.sysMsg}">システムメッセージ </span>
+		</div>
+		
+		<div th;unless="${iitemInfoForm.errMsg}" class="block-detail">
+			<form th:action="@{/itemDelete}" method="post" th:object="${itemInfoForm}">
+				<table>
+					<tr>
+						<th>商品ID</th>
+						<td>
+							<input type="hidden" th:field="*{itemId}" />
+							<span th:text="*{itemId}"></span>
+						</td>
+					</tr>
+					<tr>
+						<th>商品名</th>
+						<td th:text="*{itemName}"></td>
+					</tr>
+					<tr>
+						<th>区分</th>
+						<td th:text="*{itemKubun}"></td>						
+					</tr>
+					<tr>
+						<th>メーカー</th>
+						<td th:text="*{maker}"></td>
+					</tr>
+					<tr>
+						<th>JANコード</th>
+						<td th:text="*{jancd}"></td>
+					</tr>
+					<tr>
+						<th>購入単価</th>
+						<td th:text="*{purchaseUnitPrice} + 円"></td>
+					</tr>
+                    <tr>
+						<th>販売単価</th>
+						<td th:text="*{salesUnitPrice} + 円"></td>
+					</tr>
+                    <tr>
+						<th>保管場所</th>
+						<td th:text="*{storageLocation}"></td>
+					</tr>
+                    <tr>
+						<th>入庫日</th>
+						<td th:text="*{receiptDate}"></td>
+					</tr>
+					<tr>
+						<th>作成者</th>
+						<td th:text="*{createUser}"></td>
+					</tr>
+					<tr>
+						<th>作成日時</th>
+						<td th:text="*{createDate}"></td>
+					</tr>
+					<tr>
+						<th>更新者</th>
+						<td th:text="*{updateUser}"></td>
+					</tr>
+					<tr>
+						<th>更新日時</th>
+						<td th:text="*{updateDate}"></td>
+					</tr>
+				</table><br>
+				
+				<div class="btn-container">
+					<input type="submit" name="削除" value="商品削除" class="btn" />
+				</div>
+			</form>
+		
+			<div class="btn-form">
+				<form th:action="@{/itemList}" method="get">
+					<button type="submit" class="back-btn">戻る</button>
+				</form>
+
+				<button type="button" class="back-btn" onclick="location.href='/'">HOMEへ戻る</button>
+			</div>
+		</div>
+	</body>
+</html>
+

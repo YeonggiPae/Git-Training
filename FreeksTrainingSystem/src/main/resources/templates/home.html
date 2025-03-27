@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+	
+	<head>
+		<meta charset="UTF-8">
+		<title>freeks研修システム</title>
+		<link rel="stylesheet" href="css/common.css">
+	</head>
+	
+	<head th:replace="utils/header::header_block(title='HOME')"></head>
+	<footer th:replace="utils/footer::footer_block(| |)"></footer>
+	
+	<body>
+		<!--FirstWebSystemのボタン-->
+		<div class="btn-area-center">
+			<form th:action="@{/firstWebSystem}" method="get">
+				<button type="submit" class="menu-btn">FirstWebSystem</button>
+			</form>
+		</div>
+	
+		<!--クイズ課題のボタン-->	
+		<div class="btn-area-center">
+			<form th:action="@{/quizQuestion}" method="get">
+				<button type="submit" class="menu-btn">クイズ課題</button>
+			</form>
+		</div>
+		
+		<!--システム課題のボタン-->	
+		<div class="btn-area-center">
+			<form th:action="@{/itemList}" method="get">
+				<button type="submit" class="menu-btn">システム課題</button>
+			</form>
+		</div>
+		
+		
+	</body>
+
+</html>

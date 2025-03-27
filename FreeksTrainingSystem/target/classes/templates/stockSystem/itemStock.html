@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>freeks研修システム</title>
+		<link rel="stylesheet" href="/css/common.css">
+		<link rel="stylesheet" href="/css/stock_system.css">
+	</head>
+
+	<body>
+		<header th:replace="utils/header::header_block(title='在庫詳細')"></header>
+		<footer th:replace="utils/footer::footer_block(| |)"></footer>
+		
+		<div class="error-msg">
+			<!--ItemControllerからitemStockFormを「itemStockForm」として受け取り、
+				itemList変数に格納された商品情報、あるいはエラーメッセージを表示-->
+			<span th:if="${itemStockForm.errMsg}" th:text="${itemStockForm.errMsg}">エラーメッセージ</span>
+		</div>
+		<div class="system-msg">
+			<span th:if="${itemStockForm.sysMsg}" th:text="${itemStockForm.sysMsg}">システムメッセージ</span>
+		</div>
+		
+		<div class="block-detail">
+			<form th:action="@{/stockUpdate}" method="post" th:object="${itemStockForm}">
+				<table>
+					<tr>
+						<th>在庫ID</th>
+						<td>
+							<input type="hidden" th:field="*{storageStockId}" />
+							<span th:text="*{storageStockId}"></span>
+						</td>
+					</tr>
+					<tr>
+						<th>商品ID</th>
+						<td>
+							<input type="hidden" th:field="*{itemId}">
+							<span th:text="*{itemId}"></span>
+						</td>
+					</tr>
+					<tr>
+						<th>在庫数</th>
+						<td>
+							<input type="hidden" th:field="*{stockQuantity}" />
+							<span th:text="*{stockQuantity}"></span>
+						</td>
+					</tr>
+					<tr>
+						<!-- 数字のみ、入力必須-->
+						<th>入庫数</th>
+						<td>
+							<input type="text" th:field="*{receiveQuantity}" /><br>
+							<span style="color:red;" th:if="${#fields.hasErrors('receiveQuantity')}" 
+							th:errors="*{receiveQuantity}">haserror</span>
+						</td>
+					</tr>
+					<tr>
+						<!-- 数字のみ、入力必須-->
+						<th>出庫数</th>
+						<td>
+							<input type="text" th:field="*{dispatchQuantity}" /><br>
+							<span style="color:red;" th:if="${#fields.hasErrors('dispatchQuantity')}" 
+							th:errors="*{dispatchQuantity}">haserror</span>
+						</td>
+					</tr>
+					<tr>
+						<!-- 入力必須-->
+						<th>保管場所</th>
+						<td>
+							<input type="text" th:field="*{storageLocation}" /><br>
+							<span style="color:red;" th:if="${#fields.hasErrors('storageLocation')}" 
+							th:errors="*{storageLocation}">haserror</span>
+						</td>
+					</tr>
+					<tr>
+						<th>作成者</th>
+						<td>
+							<input type="hidden" th:field="*{createUser}">
+							<span th:text="*{createUser}"></span>
+						</td>
+					</tr>
+					<tr>
+						<th>作成日時</th>
+						<td>
+							<input type="hidden" th:field="*{createDate}">
+							<span th:text="*{createDate}"></span>
+						</td>
+					</tr>
+					<tr>
+						<th>更新者</th>
+						<td>
+							<input type="hidden" th:field="*{updateUser}">
+							<span th:text="*{updateUser}"></span>
+						</td>
+					</tr>
+					<tr>
+						<th>更新日時</th>
+						<td>
+							<input type="hidden" th:field="*{updateDate}">
+							<span th:text="*{updateDate}"></span>
+						</td>
+					</tr>
+				</table><br>
+				
+				<div class="btn-container">
+					<input type="submit" name="更新" value="在庫更新" class="btn" />
+				</div>
+				
+			</form>
+		
+			<div class="btn-form">
+				<form th:action="@{/itemList}" method="get">
+					<button type="submit" class="back-btn">戻る</button>
+				</form>
+
+				<button type="button" class="back-btn" onclick="location.href='/'">HOMEへ戻る</button>
+			</div>
+		</div>
+		
+	</body>
+</html>
+
+
+
+
+
+
+
