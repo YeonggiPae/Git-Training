@@ -1,0 +1,26 @@
+■gitコマンド
+
+【現在のブランチ確認】
+git branch
+
+【ディレクトリ変更】
+cd /c/git/freeksTrainingSystem
+
+【ブランチ変更】
+git checkout training_7059YeonggiPae
+
+【変更をインデックスに追加】
+git add ファイル名
+or
+git add .
+
+【コミット】
+git commit -m "コメント"
+
+【プッシュ】
+git push origin training_7059YeonggiPae
+
+
+
+
+【origin/main：リモート追跡ブランチ】

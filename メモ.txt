@@ -1,0 +1,20 @@
+【実行ポート変更】
+application.propertiesで
+server.port=8081
+
+【環境依存しない改行コード】
+// 環境依存しない改行コード
+public static final String LINE_SEPARATOR = System.getProperty("line.separator");
+	
+
+
+【エラーログのコンソール出力】
+// 例外の詳細をログに出力
+e.printStackTrace();
+// ログに例外メッセージを出力
+System.out.println("Error occurred during item registration: " + e);
+
+
+【Thymeleaf使用時の注意事項】
+htmlはsrc\main\resources\templates配下に作成
+Javascriptはsrc\main\resources\static\js配下に作成
